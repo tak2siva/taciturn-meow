@@ -1,0 +1,117 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>jsdifflib demo</title>
+    <link rel="stylesheet" type="text/css" href="diffview.css"/>
+    <script type="text/javascript" src="diffview.js"></script>
+    <script type="text/javascript" src="difflib.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="sortJson.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 12px;
+            font-family: Sans-Serif;
+        }
+        h2 {
+            margin: 0.5em 0 0.1em;
+            text-align: center;
+        }
+        .top {
+            text-align: center;
+        }
+        .textInput {
+            display: block;
+            width: 49%;
+            float: left;
+        }
+        textarea {
+            width:100%;
+            height:300px;
+        }
+        label:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .spacer {
+            margin-left: 10px;
+        }
+        .viewType {
+            font-size: 16px;
+            clear: both;
+            text-align: center;
+            padding: 1em;
+        }
+        #diffoutput {
+            width: 100%;
+        }
+        .diff table{
+            width: 100%;
+        }
+        .assertion_error textarea {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+        }
+        .viewTypeBtn {
+            font-size: 16px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".typeRadioBtn").click(function(e){
+                if(window.diffType == e.target.id)
+                    return false;
+                $(".assertion_error").toggle();
+                $(".json_diff").toggle();
+
+                window.diffType = e.target.id;
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="viewTypeBtn">
+    <input type="radio" class="typeRadioBtn" name="diffType" id="assertDiff" checked="checked"/> <label for="assertDiff">Assertion Diff</label>
+    <br/>
+    <input type="radio" class="typeRadioBtn" name="diffType" id="jsonDiff"/> <label for="jsonDiff">Json Diff</label>
+</div>
+<div class="assertion_error">
+        <h2>java.lang.AssertionError:</h2>
+        <textarea id="assertErrText"></textarea>
+</div>
+
+<div class="json_diff" hidden="true">
+    <div class="textInput">
+        <h2>Base Text</h2>
+        <textarea id="baseText"></textarea>
+    </div>
+    <div class="textInput spacer">
+        <h2>New Text</h2>
+        <textarea id="newText"></textarea>
+    </div>
+</div>
+
+<!--<div class="normal_diff" hidden="true">-->
+    <!--<div class="textInput">-->
+        <!--<h2>Base Text</h2>-->
+        <!--<textarea id="baseText"></textarea>-->
+    <!--</div>-->
+    <!--<div class="textInput spacer">-->
+        <!--<h2>New Text</h2>-->
+        <!--<textarea id="newText"></textarea>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="viewType">
+    <input type="radio" name="_viewtype" id="sidebyside" onclick="showAssertionDiff(0);" /> <label for="sidebyside">Side by Side Diff</label>
+    &nbsp; &nbsp;
+    <input type="radio" name="_viewtype" id="inline" onclick="showAssertionDiff(1);" /> <label for="inline">Inline Diff</label>
+</div>
+<div id="diffoutput"> </div>
+</body>
+</html>
