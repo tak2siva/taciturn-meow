@@ -59,6 +59,14 @@
         .viewTypeBtn {
             font-size: 16px;
         }
+        .process_btn {
+            text-align: center;
+            padding-top: 17%;
+        }
+
+        .process_btn button {
+            font-size: 22px;
+        }
     </style>
 
     <script type="text/javascript">
@@ -76,16 +84,16 @@
 </head>
 <body>
 <div class="viewTypeBtn">
-    <input type="radio" class="typeRadioBtn" name="diffType" id="assertDiff" checked="checked"/> <label for="assertDiff">Assertion Diff</label>
+    <!-- <input type="radio" class="typeRadioBtn" name="diffType" id="assertDiff"/> <label for="assertDiff">Assertion Diff</label> -->
     <br/>
-    <input type="radio" class="typeRadioBtn" name="diffType" id="jsonDiff"/> <label for="jsonDiff">Json Diff</label>
+    <input type="radio" class="typeRadioBtn" name="diffType" id="jsonDiff" checked="checked"/> <label for="jsonDiff">Json Diff</label>
 </div>
-<div class="assertion_error">
+<div class="assertion_error" hidden="true">
         <h2>java.lang.AssertionError:</h2>
         <textarea id="assertErrText"></textarea>
 </div>
 
-<div class="json_diff" hidden="true">
+<div class="json_diff" >
     <div class="textInput">
         <h2>Base Text</h2>
         <textarea id="baseText"></textarea>
@@ -106,9 +114,12 @@
         <!--<textarea id="newText"></textarea>-->
     <!--</div>-->
 <!--</div>-->
+<div class="process_btn">
+<button onclick="showAssertionDiff(0);">Process</button>
+</div>
 
 <div class="viewType">
-    <input type="radio" name="_viewtype" id="sidebyside" onclick="showAssertionDiff(0);" /> <label for="sidebyside">Side by Side Diff</label>
+    <input type="radio" name="_viewtype" id="sidebyside" onclick="showAssertionDiff(0);" checked="checked"/> <label for="sidebyside">Side by Side Diff</label>
     &nbsp; &nbsp;
     <input type="radio" name="_viewtype" id="inline" onclick="showAssertionDiff(1);" /> <label for="inline">Inline Diff</label>
 </div>

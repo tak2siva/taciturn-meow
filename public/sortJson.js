@@ -1,23 +1,4 @@
-window.diffType = "assertDiff";
-
-function sortObject(object) {
-    var sortedObj = {};
-    var keys = _.keys(object);
-
-    keys = _.sortBy(keys, function (key) {
-        return key;
-    });
-
-    _.each(keys, function (key) {
-        if (typeof object[key] == 'object' && !(object[key] instanceof Array)) {
-            sortedObj[key] = sortObject(object[key]);
-        } else {
-            sortedObj[key] = object[key];
-        }
-    });
-
-    return sortedObj;
-}
+window.diffType = "jsonDiff";
 
 function sortObject(object){
     var sortedJSON;
@@ -25,14 +6,13 @@ function sortObject(object){
 }
 
 function getPrettyText(rawText) {
-    var obj = rawText;
-    while (obj && typeof(obj) != "object")
-        obj = JSON.parse(obj);
-
-    // obj = sortObject(obj);
-
-    // var prettyText = JSON.stringify(obj, null, 2);
-    // return prettyText;
+    try {
+        var obj = rawText;
+        while (obj && typeof(obj) != "object")
+            obj = JSON.parse(obj);
+    } catch(e){
+        alert("Error parsing input");
+    }
     return sortObject(obj);
 }
 
@@ -64,6 +44,7 @@ function showAssertionDiff(viewType) {
         var newText = getNeWText();
     } catch (e) {
         alert("Invalid input");
+        return 0;
     }
 
     var sortedBaseText;
@@ -79,17 +60,21 @@ function showAssertionDiff(viewType) {
     }).then(function() {
         renderDiff(sortedBaseText, sortedNewText, viewType);
     });
-
-
 }
 
-function renderDiff(baseText, newText, viewType){ 
+function getViewType(){
+    var type = $('input[name=_viewtype]:checked').attr("id");
+    if("sidebyside" == type) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+function renderDiff(baseText, newText){ 
     baseText = difflib.stringAsLines(baseText);
     newText = difflib.stringAsLines(newText);
-
-
-    //console.log(baseText)
-    //console.log(newText)
+    viewType = getViewType();
 
     var sm = new difflib.SequenceMatcher(baseText, newText);
     var opcodes = sm.get_opcodes();
