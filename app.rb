@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'json'
-require 'pry'
 require './tree_map'
 
 get "/" do
